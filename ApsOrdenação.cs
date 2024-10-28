@@ -318,6 +318,79 @@ namespace FastOrder
         }
 
 
+        private void QuickSort_Click(object sender, EventArgs e)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            int low = 0;
+            int high = imageList.Count - 1;
+
+            Stack<(int, int)> stack = new Stack<(int, int)>();
+            stack.Push((low, high));
+
+            while (stack.Count > 0)
+            {
+                var (start, end) = stack.Pop();
+
+                if (start < end)
+                {
+                    var pivot = imageList[end];
+                    int i = start - 1;
+
+                    for (int j = start; j < end; j++)
+                    {
+                        bool shouldSwap = false;
+
+                        switch (currentCriteria)
+                        {
+                            case SortingCriteria.DataUpload:
+                                shouldSwap = imageList[j].Item2 < pivot.Item2;
+                                break;
+                            case SortingCriteria.Tamanho:
+                                shouldSwap = imageList[j].Item3 < pivot.Item3;
+                                break;
+                            case SortingCriteria.Id:
+                                shouldSwap = imageList[j].Item4 < pivot.Item4;
+                                break;
+                        }
+
+                        if (shouldSwap)
+                        {
+                            i++;
+                            var temp = imageList[i];
+                            imageList[i] = imageList[j];
+                            imageList[j] = temp;
+                        }
+                    }
+
+                    var tempPivot = imageList[i + 1];
+                    imageList[i + 1] = imageList[end];
+                    imageList[end] = tempPivot;
+
+                    int pi = i + 1;
+
+                    stack.Push((start, pi - 1));
+                    stack.Push((pi + 1, end));
+                }
+            }
+
+            stopwatch.Stop();
+
+            TimeSpan elapsed = stopwatch.Elapsed;
+
+            string tempoFormatado = string.Format("{0}m {1}s {2}ms",
+                (int)elapsed.TotalMinutes,
+                elapsed.Seconds,
+                elapsed.Milliseconds);
+
+            RefreshImageButtons();
+            MessageBox.Show($"Ordenação por QuickSort completa em {tempoFormatado}.");
+        }
+
+
+
+
         // Atualiza os botões após ordenação ou navegação de página
         private void RefreshImageButtons()
         {
@@ -377,5 +450,6 @@ namespace FastOrder
         {
 
         }
+
     }
 }
