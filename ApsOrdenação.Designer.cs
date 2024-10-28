@@ -256,8 +256,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImage = global::FastOrder.Properties.Resources.fundo1;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(966, 542);
             this.Controls.Add(this.QuickSort);
             this.Controls.Add(this.label5);
@@ -279,6 +278,7 @@
             this.Controls.Add(this.InsertionSort);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.ForeColor = System.Drawing.Color.Black;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Form1";
             this.Text = "FastOrder";
