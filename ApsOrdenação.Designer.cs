@@ -45,6 +45,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.QuickSort = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -241,6 +242,16 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // Quicksort
+            // 
+            this.QuickSort.Location = new System.Drawing.Point(716, 288);
+            this.QuickSort.Name = "button3";
+            this.QuickSort.Size = new System.Drawing.Size(119, 23);
+            this.QuickSort.TabIndex = 17;
+            this.QuickSort.Text = "QuickSort";
+            this.QuickSort.UseVisualStyleBackColor = true;
+            this.QuickSort.Click += new System.EventHandler(this.QuickSort_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -248,6 +259,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = global::FastOrder.Properties.Resources.fundo1;
             this.ClientSize = new System.Drawing.Size(966, 542);
+            this.Controls.Add(this.QuickSort);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -296,6 +308,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button QuickSort;
     }
 }
 

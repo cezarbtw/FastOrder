@@ -13,9 +13,9 @@ namespace FastOrder
     {
         private DatabaseConnection dbConnection = new DatabaseConnection();
         private List<(byte[] Imagem, DateTime DataUpload, int Tamanho, int Id)> imageList = new List<(byte[], DateTime, int, int)>();
-        private int currentIndex = 0;  
-        private int currentPage = 0;  
-        private int itemsPerPage = 100; 
+        private int currentIndex = 0;
+        private int currentPage = 0;
+        private int itemsPerPage = 100;
         private SortingCriteria currentCriteria = SortingCriteria.DataUpload;
 
         public Form1()
@@ -26,14 +26,14 @@ namespace FastOrder
         private async void Form1_Load(object sender, EventArgs e)
         {
             await LoadImages();
-            RefreshImageButtons();  
+            RefreshImageButtons();
             UpdatePageLabel();
         }
 
         private void UpdatePageLabel()
         {
             int totalPages = (int)Math.Ceiling((double)imageList.Count / itemsPerPage);
-            label5.Text = $"Página {currentPage + 1} de {totalPages}";  
+            label5.Text = $"Página {currentPage + 1} de {totalPages}";
         }
 
         // Carrega os metadados das imagens
@@ -316,6 +316,100 @@ namespace FastOrder
             RefreshImageButtons();
             MessageBox.Show($"Ordenação por inserção completa em {tempoFormatado}.");
         }
+
+
+
+        private void QuickSort_Click(object sender, EventArgs e)
+        {
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+
+
+            int i = 0; // Inicializa i
+            int j = imageList.Count - 1; // Inicializa j como o último índice da lista
+
+            // Verifica se a lista contém pelo menos dois elementos
+            if (imageList.Count < 2)
+            {
+                MessageBox.Show("A lista deve ter pelo menos dois elementos para ordenar.");
+                return;
+            }
+
+            // Verifica se i é menor que j antes de começar a ordenar
+            if (i < j)
+            {
+                var key = imageList[j];  // Definindo o pivô como o último elemento do intervalo
+                int partitionIndex = i - 1;
+
+                for (int k = i; k < j; k++)
+                {
+                    bool shouldSwap = false;
+
+                    // Escolhe o critério de ordenação
+                    switch (currentCriteria)
+                    {
+                        case SortingCriteria.DataUpload:
+                            shouldSwap = imageList[k].DataUpload < key.DataUpload;
+                            break;
+                        case SortingCriteria.Tamanho:
+                            shouldSwap = imageList[k].Tamanho < key.Tamanho;
+                            break;
+                        case SortingCriteria.Id:
+                            shouldSwap = imageList[k].Id < key.Id;
+                            break;
+                    }
+
+                    if (shouldSwap)
+                    {
+                        partitionIndex++;
+
+                        // Troca usando uma variável temporária
+                        if (partitionIndex < imageList.Count && k < imageList.Count)
+                        {
+                            var tempSwap = imageList[partitionIndex];
+                            imageList[partitionIndex] = imageList[k];
+                            imageList[k] = tempSwap;
+                        }
+                    }
+                }
+
+
+                // Atualiza j e executa a lógica semelhante ao código fornecido
+                j--;
+                while (j > partitionIndex) // Mova todos os elementos para a direita
+                {
+                    if (j + 1 < imageList.Count) // Verifica se o índice está dentro do intervalo
+                    {
+                        imageList[j + 1] = imageList[j]; // Desloca o elemento para a direita
+                    }
+                    j--;
+                }
+
+
+                if (partitionIndex + 1 < imageList.Count) // Verifica se o índice está dentro do intervalo
+                {
+                    imageList[partitionIndex + 1] = key; // Coloca o pivô na posição correta
+                }
+
+                // Para fins de medição de tempo
+                stopwatch.Stop();
+                TimeSpan elapsed = stopwatch.Elapsed;
+
+                string tempoFormatado = string.Format("{0}m {1}s {2}ms",
+                    (int)elapsed.TotalMinutes,  // Minutos totais
+                    elapsed.Seconds,             // Segundos
+                    elapsed.Milliseconds);       // Milissegundos
+
+                // Atualiza os botões e exibe o tempo de execução
+                RefreshImageButtons();
+                MessageBox.Show($"Ordenação por Ordenação rápida completa em {tempoFormatado}.");
+            }
+        }
+
+
+
 
 
         // Atualiza os botões após ordenação ou navegação de página

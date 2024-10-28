@@ -8,7 +8,7 @@ public class DatabaseConnection
 
     public DatabaseConnection()
     {
-        connectionString = "Server=WIN-NRSBVRMVO1H\\SQLEXPRESS;Database=FastOrder;Trusted_Connection=yes;TrustServerCertificate=True;";
+        connectionString = "Server=DESKTOP-DPH9529\\SQLEXPRESS;Database=FastOrder;Trusted_Connection=yes;TrustServerCertificate=True;";
     }
 
     public SqlConnection OpenConnection()
